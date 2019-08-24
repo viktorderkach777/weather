@@ -11,7 +11,7 @@ import {
     //Button
 } from 'reactstrap';
 
-const WeatherListItem = ({ tile }) => {
+const WeatherListItem = ({ tile, onClick }) => {
     const { tempMax, tempMin, icon, day } = tile;
     return (
         // <>
@@ -20,27 +20,31 @@ const WeatherListItem = ({ tile }) => {
         //     <span>{tempMax}</span>
         //     <span>{tempMin}</span>
         // </>
+
         <Col>
-            <Card body outline color="primary">
-                <CardBody >
-                    <Row >
-                        <CardTitle>
-                            <div className="textCenter">
-                                {day}
-                            </div>
-                        </CardTitle>
-                    </Row>
-                    <Row>
-                        {/* <CardImg src={icon}> */}
-                             <img src={icon} alt="alt"></img> 
-                        {/* </CardImg> */}
-                    </Row>
-                    <Row>
-                        <strong>{tempMax}&deg;</strong>/{tempMin}&deg;
+            <button style={{ cursor: "pointer" }} onClick={onClick}>
+                <Card body outline color="primary">
+                    <CardBody >
+                        <Row >
+                            <CardTitle>
+                                <div className="textCenter">
+                                    {day}
+                                </div>
+                            </CardTitle>
+                        </Row>
+                        <Row>
+                            {/* <CardImg src={icon}> */}
+                            <img src={icon} alt="alt"></img>
+                            {/* </CardImg> */}
+                        </Row>
+                        <Row>
+                            <strong>{tempMax}&deg;</strong>/{tempMin}&deg;
                                            </Row>
-                </CardBody>
-            </Card>
-        </Col>
+                    </CardBody>
+                </Card>
+            </button>
+        </Col >
+
     );
 };
 

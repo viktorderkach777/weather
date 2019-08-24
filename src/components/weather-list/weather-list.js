@@ -1,56 +1,72 @@
 import React, { Component } from 'react';
 import WeatherListItem from '../weather-list-item';
 import { connect } from 'react-redux';
-import {compose} from '../../utils';
+import { compose } from '../../utils';
 import withWeatherService from '../hoc';
-import {tilesLoaded} from '../../actions';
+import { fetchTiles, cityDataLoaded } from '../../actions';
 import Spinner from '../spinner';
+import ErrorIndicator from '../error-indicator';
 
-class WeatherList extends Component {
-    //state = {}
-    componentDidMount() {
-        const { weatherService, tilesLoaded } = this.props;
-        weatherService.getTiles()
-        .then((tiles)=>{
-            console.log("tiles", tiles);
-            tilesLoaded(tiles);
-        })        
+class WeatherListContainer extends Component {
+
+    componentDidMount() { 
+
+        this.props.fetchTiles();
     }
 
     render() {
-        const { tiles, loading } = this.props;
+        const { tiles, loading, error, clickTile } = this.props;
 
-        if(loading){
-            return <Spinner/>
+        if (loading) {
+            return <Spinner />
         }
+
+        if (error) {
+            return <ErrorIndicator />
+        }
+
         return (
-            <div>
-                {
-                    tiles.map((tile) => {
-                        return (
-                            //  <li key={tile.id}>
-                                <WeatherListItem key={tile.id} tile={tile} />
-                            //  </li>
-                        )
-                    })
-                }
-           </div>
+            <WeatherList tiles={tiles} clickTile={clickTile}/>            
         );
     }
 }
 
-const mapDispatchToProps = {
-    tilesLoaded
+const WeatherList = ({ tiles, clickTile }) => {
+    return (
+        <>
+            {
+                tiles.map((tile) => {
+                    return (
+                        <WeatherListItem key={tile.id} tile={tile} onClick={()=>{clickTile(tile.id)}}/>
+                    )
+                })
+            }
+        </>
+    );
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+
+    const { weatherService } = ownProps;
+
+    return {
+        fetchTiles: fetchTiles(weatherService, dispatch),
+        clickTile: (id) =>{
+            dispatch(cityDataLoaded(id))
+            console.log("clickId", id);
+        }        
+    }
 };
 
 const mapStateToProps = (state) => {
     return {
         tiles: state.tiles,
-        loading: state.loading
+        loading: state.loading,
+        error: state.error
     };
 };
 
 export default compose(
     withWeatherService(),
     connect(mapStateToProps, mapDispatchToProps)
-    )(WeatherList);
+)(WeatherListContainer); 
