@@ -1,33 +1,14 @@
 
 const initialState = {
     tiles: [],
-    loading: true,
-    error: null,
-    cityName: 'Kyiv',
-    country: 'UA',
-    currentCityWeatherDataId: 1,
-    cityData: [
-        {
-            id: 0,
-            cityDay: 'monday',
-            cityWeatherDescription: 'sun',
-            cityWeatherIcon: 'https://openweathermap.org/img/w/01d.png',
-            cityTemp: 28,
-            cityHumidity: 48,
-            cityPressure: 1000,
-            cityWind: 5
-        },
-        {
-            id: 1,
-            cityDay: 'friday',
-            cityWeatherDescription: 'clouds',
-            cityWeatherIcon: 'https://openweathermap.org/img/w/01d.png',
-            cityTemp: 25,
-            cityHumidity: 38,
-            cityPressure: 1100,
-            cityWind: 7
-        }
-    ]
+    tilesLoading: true,
+    tilesError: null,
+    cityDataLoading: true,
+    cityDataError: null,
+    cityName: null,
+    country: null,
+    currentCityWeatherDataId: null,
+    cityData: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -39,39 +20,64 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 tiles: [],
-                loading: true,
-                error: null
+                tilesLoading: true,
+                tilesError: null
             };
         case 'FETCH_TILES_SUCCESS':
             return {
                 ...state,
                 tiles: action.payload,
-                loading: false,
-                error: null
+                tilesLoading: false,
+                tilesError: null
             };
         case 'FETCH_TILES_FAILURE':
             return {
                 ...state,
                 tiles: [],
-                loading: false,
-                error: action.payload
+                tilesLoading: false,
+                tilesError: action.payload
             };
-        // case 'FETCH_CITY_DATA_SUCCESS':
-
-        //     const currentCityWeatherDataId = action.payload;
-        //     const currentCityData = state.cityData.find(
-        //         (el) => el.id === currentCityWeatherDataId
-        //     );
-        //     const cityDataItem = {
-        //         id: currentCityData.id,
-        //         cityDay: currentCityData.cityDay,
-        //         cityWeatherDescription: currentCityData.cityWeatherDescription,
-        //         cityWeatherIcon: currentCityData.cityWeatherIcon,
-        //         cityTemp: currentCityData.cityTemp,
-        //         cityHumidity: currentCityData.cityHumidity,
-        //         cityPressure: currentCityData.cityPressure,
-        //         cityWind: currentCityData.cityWind
-        //     }
+        case 'FETCH_CITY_DATA_BY_ID_SUCCESS':            
+            return {
+                ...state,
+                currentCityWeatherDataId: action.payload
+            };
+        case 'FETCH_CITY_DATA_SUCCESS':
+            const {
+                cityName,
+                country,
+                currentCityWeatherDataId,
+                cityData
+            } = action.payload;
+            return {
+                ...state,
+                cityName,
+                country,
+                currentCityWeatherDataId,
+                cityData,
+                cityDataLoading: false,
+                cityDataError: null
+            };
+        case 'FETCH_CITY_DATA_REQUEST':
+            return {
+                ...state,
+                cityName: null,
+                country: null,
+                currentCityWeatherDataId: null,
+                cityData: [],
+                cityDataLoading: true,
+                cityDataError: null
+            };
+        case 'FETCH_CITY_DATA_FAILURE':
+            return {
+                ...state,
+                cityName: null,
+                country: null,
+                currentCityWeatherDataId: null,
+                cityData: [],
+                cityDataLoading: false,
+                cityDataError: action.payload
+            };
 
         default:
             return state;

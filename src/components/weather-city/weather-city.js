@@ -2,28 +2,41 @@ import React, { Component } from 'react';
 import { Col, Row } from 'reactstrap';
 import { connect } from 'react-redux';
 import ErrorIndicator from '../error-indicator';
+import { compose } from '../../utils';
+import withWeatherService from '../hoc';
+import { fetchCityData } from '../../actions';
+import Spinner from '../spinner';
+
 
 class WeatherCity extends Component {
+
+    componentDidMount() {               
+        this.props.fetchCityData();
+    }
 
     render() {
         const {
             currentCityWeatherDataId,
             cityName,
             country,
-            cityData
-        } = this.props;
-
-        const data = cityData.filter((el) => {
-            return (
-                el.id === currentCityWeatherDataId ? el : null
-            )
-        });
-
-        console.log("data", data);
+            cityData,
+            cityDataLoading,
+            cityDataError
+        } = this.props; 
         
-        if (data.length === 0) {
-            return <ErrorIndicator />
+        if(cityDataLoading){
+            return <Spinner />
         }
+
+        if (cityDataError) {
+            return <ErrorIndicator />
+        }        
+
+        const data = cityData.find((el) => {
+            return (
+                el.id === currentCityWeatherDataId
+            )
+        });        
 
         const {
             id,
@@ -34,7 +47,7 @@ class WeatherCity extends Component {
             cityHumidity,
             cityPressure,
             cityWind
-        } = data[0];//cityData[currentCityWeatherDataId];
+        } = data;
 
         return (
             <>
@@ -70,20 +83,30 @@ const mapStateToProps = ({
     cityData,
     currentCityWeatherDataId,
     cityName,
-    country
+    country,
+    cityDataLoading,
+    cityDataError
 }) => {
     return {
         cityData,
         currentCityWeatherDataId,
         cityName,
-        country
+        country,
+        cityDataLoading,
+        cityDataError
     };
 }
 
-// const mapDispatchToProps = ()=>{
-//     return{
+const mapDispatchToProps = (dispatch, ownProps) => {
 
-//     }
-// }
+    const { weatherService } = ownProps;
 
-export default connect(mapStateToProps)(WeatherCity);
+    return {
+        fetchCityData: fetchCityData(weatherService, dispatch),
+    }
+};
+
+export default compose(
+    withWeatherService(),
+    connect(mapStateToProps, mapDispatchToProps)
+)(WeatherCity);

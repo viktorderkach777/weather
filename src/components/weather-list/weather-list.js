@@ -3,7 +3,7 @@ import WeatherListItem from '../weather-list-item';
 import { connect } from 'react-redux';
 import { compose } from '../../utils';
 import withWeatherService from '../hoc';
-import { fetchTiles, cityDataLoaded } from '../../actions';
+import { fetchTiles, cityDataLoadedById } from '../../actions';
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
 
@@ -15,13 +15,13 @@ class WeatherListContainer extends Component {
     }
 
     render() {
-        const { tiles, loading, error, clickTile } = this.props;
+        const { tiles, tilesLoading, tilesError, clickTile } = this.props;
 
-        if (loading) {
+        if (tilesLoading) {
             return <Spinner />
         }
 
-        if (error) {
+        if (tilesError) {
             return <ErrorIndicator />
         }
 
@@ -52,7 +52,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         fetchTiles: fetchTiles(weatherService, dispatch),
         clickTile: (id) =>{
-            dispatch(cityDataLoaded(id))
+            dispatch(cityDataLoadedById(id))
             console.log("clickId", id);
         }        
     }
@@ -61,8 +61,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const mapStateToProps = (state) => {
     return {
         tiles: state.tiles,
-        loading: state.loading,
-        error: state.error
+        tilesLoading: state.tilesLoading,
+        tilesError: state.tilesError
     };
 };
 

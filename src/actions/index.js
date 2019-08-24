@@ -18,10 +18,30 @@ const tilesError = (error) => {
     };
 };
 
-const cityDataLoaded = (currentCityWeatherDataId) => {
+const cityDataLoadedById = (currentCityWeatherDataId) => {
+    return {
+        type: 'FETCH_CITY_DATA_BY_ID_SUCCESS',
+        payload: currentCityWeatherDataId
+    };
+};
+
+const cityDataRequested = () => {
+    return {
+        type: 'FETCH_CITY_DATA_REQUEST'
+    };
+};
+
+const cityDataLoaded = (data) => {
     return {
         type: 'FETCH_CITY_DATA_SUCCESS',
-        payload: currentCityWeatherDataId
+        payload: data
+    };
+};
+
+const cityDataError = (error) => {
+    return {
+        type: 'FETCH_CITY_DATA_FAILURE',
+        payload: error
     };
 };
 
@@ -36,7 +56,18 @@ const fetchTiles = (weatherService, dispatch) => () => {
         .catch((err) => dispatch(tilesError(err)));
 }
 
+const fetchCityData = (weatherService, dispatch) => () => {
+    dispatch(cityDataRequested());
+    weatherService.getCityData()
+        .then((data) => {
+            console.log("CityData", data);
+            dispatch(cityDataLoaded(data))
+        })
+        .catch((err) => dispatch(cityDataError(err)));
+}
+
 export {
     fetchTiles,
-    cityDataLoaded
+    cityDataLoadedById,
+    fetchCityData
 };
