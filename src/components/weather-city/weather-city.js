@@ -10,7 +10,22 @@ import Spinner from '../spinner';
 
 class WeatherCity extends Component {
 
-    componentDidMount() {               
+    componentDidMount() { 
+        //const {weatherService} = this.props;
+        // weatherService.fetchData('Rivne')
+        // .then((response) => {
+        //     console.log('FETCH_DATA_FULFILLED', response.data);
+        //   //dispatch({type: FETCH_DATA_FULFILLED, payload: response.data});
+        // })
+        // .catch((err) => {
+        //     console.log('FETCH_DATA_REJECTED', err);
+        //   //dispatch({type: FETCH_DATA_REJECTED, payload: err}); // Error handling
+        // });    
+        // weatherService.getResources()
+        // .then((body)=>{
+        //     console.log("body", body);
+        // })
+        // .catch((err)=>console.error(err));   
         this.props.fetchCityData();
     }
 
