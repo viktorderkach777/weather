@@ -12,6 +12,7 @@ class WeatherListContainer extends Component {
     componentDidMount() { 
 
         this.props.fetchTiles();
+        
     }
 
     render() {

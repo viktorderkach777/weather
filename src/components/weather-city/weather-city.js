@@ -52,10 +52,12 @@ class WeatherCity extends Component {
             return (
                 el.day === cityDay
             )
-        });       
+        });    
+        
+        //console.log("data" , data);
 
         const {
-            id,           
+            // id,           
             tempMax,
             tempMin,
             icon,
@@ -68,7 +70,7 @@ class WeatherCity extends Component {
 
         return (
             <>
-                <div>{id}</div>
+                {/* <div>{id}</div> */}
                 <div><h1>{cityName}, {country}</h1></div>
                 <div><h5>{day}</h5></div>
                 <div><h4>{weatherDescription}</h4></div>
