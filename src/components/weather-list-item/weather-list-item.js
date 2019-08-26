@@ -10,6 +10,7 @@ import {
     //CardText,
     //Button
 } from 'reactstrap';
+import './mycenter.css';
 
 const WeatherListItem = ({ tile, onClick }) => {
     const { tempMax, tempMin, icon, day } = tile;
@@ -22,27 +23,27 @@ const WeatherListItem = ({ tile, onClick }) => {
         // </>
 
         <Col>
-            <button style={{ cursor: "pointer" }} onClick={onClick}>
-                <Card body outline color="primary">
-                    <CardBody >
-                        <Row >
-                            <CardTitle>
-                                <div className="textCenter">
-                                    {day}
-                                </div>
-                            </CardTitle>
-                        </Row>
-                        <Row>
-                            {/* <CardImg src={icon}> */}
+            {/* <a  style={{ cursor: "pointer" }} onClick={onClick}> */}
+            <Card tag="a" style={{ cursor: "pointer", margin: "auto", textAlign: "center" }} onClick={onClick} body outline color="primary" className="text-center">
+                <CardBody >
+                    <Row>
+                        <div className="centerSemen">
+                            {day}
+                        </div>
+                    </Row>
+                    <Row>
+                        <div className="centerSemen">
                             <img src={icon} alt="alt"></img>
-                            {/* </CardImg> */}
-                        </Row>
-                        <Row>
+                        </div>
+                    </Row>
+                    <Row>
+                        <div className="centerSemen">
                             <strong>{tempMax}&deg;</strong>/{tempMin}&deg;
-                                           </Row>
-                    </CardBody>
-                </Card>
-            </button>
+                        </div>
+                    </Row>
+                </CardBody>
+            </Card>
+            {/* </a> */}
         </Col >
 
     );

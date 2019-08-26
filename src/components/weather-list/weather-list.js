@@ -36,9 +36,9 @@ const WeatherList = ({ tiles, clickTile }) => {
     return (
         <>
             {
-                tiles.map((tile) => {
+                tiles.map((tile, index) => {
                     return (
-                        <WeatherListItem key={tile.day} tile={tile} onClick={()=>{clickTile(tile.day)}}/>
+                        <WeatherListItem key={index} tile={tile} onClick={()=>{clickTile(tile.day)}}/>
                     )
                 })
             }
