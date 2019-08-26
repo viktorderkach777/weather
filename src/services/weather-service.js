@@ -1,59 +1,43 @@
 import { APP_ID } from '../actions/constants';
 import axios from "axios";
-//import { async } from 'q';
 
 export default class WeatherService {
     tiles = [
-        {
-            id: 1,
+        {           
             tempMax: 30,
             tempMin: 20,
             icon: 'https:openweathermap.org/img/w/01d.png',
-            day: 'monday'
+            day: 'monday',
+            weatherDescription: 'sun',
+            humidity: 60,
+            pressure:760,
+            wind: 4
         },
-        {
-            id: 2,
+        {           
             tempMax: 29,
             tempMin: 28,
             icon: 'https:openweathermap.org/img/w/10d.png',
-            day: 'monday'
+            day: 'friday',
+            weatherDescription: 'sun',
+            humidity: 70,
+            pressure:770,
+            wind: 5
         }
 
     ];
 
     cityName = 'Kyiv';
-    country = 'UA';
-    currentCityWeatherDataId = 1;
-    cityData = [
-        {
-            id: 1,
-            cityDay: 'monday',
-            cityWeatherDescription: 'sun',
-            cityWeatherIcon: 'https://openweathermap.org/img/w/01d.png',
-            cityTemp: 28,
-            cityHumidity: 48,
-            cityPressure: 1000,
-            cityWind: 5
-        },
-        {
-            id: 2,
-            cityDay: 'friday',
-            cityWeatherDescription: 'clouds',
-            cityWeatherIcon: 'https://openweathermap.org/img/w/03d.png',
-            cityTemp: 25,
-            cityHumidity: 38,
-            cityPressure: 1100,
-            cityWind: 7
-        }
-    ];
+    country = 'UA';   
+    cityDay = 'monday';
+    
 
-    //_apiBase = 
+    _apiBase = 'https://api.openweathermap.org/data/2.5/forecast';
     //fetchData = (region) => (dispatch) => {
     fetchData = async (region = 'Rivne') => {
         const { latitude, longitude } = region || {};
 
-        const getDataByCity = `https://api.openweathermap.org/data/2.5/forecast?q=${region}&units=metric&appid=${APP_ID}`;
-        const getDataByCoords = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${APP_ID}`;
+        const getDataByCity = `${this._apiBase}?q=${region}&units=metric&appid=${APP_ID}`;
+        const getDataByCoords = `${this._apiBase}?lat=${latitude}&lon=${longitude}&units=metric&appid=${APP_ID}`;
 
         let location = typeof (region) === "object" ? getDataByCoords : getDataByCity;
 
@@ -84,12 +68,7 @@ export default class WeatherService {
         })     
     }
 
-
-
-
-
-    getTiles() {
-        //return this.tiles;
+    getTiles() {        
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 // if (Math.random() > 0.75) {
@@ -109,9 +88,9 @@ export default class WeatherService {
                 // } else {
                 resolve({
                     cityName: this.cityName,
-                    country: this.country,
-                    currentCityWeatherDataId: this.currentCityWeatherDataId,
-                    cityData: this.cityData
+                    country: this.country,                   
+                    cityDay: this.cityDay,
+                    tiles: this.tiles                    
                 });
                 //}
             }, 700);
@@ -119,5 +98,4 @@ export default class WeatherService {
     }
 }
 
-// weatherService = new WeatherService();
-// weatherService.getResources();
+

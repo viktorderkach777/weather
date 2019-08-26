@@ -18,16 +18,10 @@ const tilesError = (error) => {
     };
 };
 
-const cityDataLoadedById = (currentCityWeatherDataId) => {
+const cityDataLoadedByDay = (cityDay) => {
     return {
-        type: 'FETCH_CITY_DATA_BY_ID_SUCCESS',
-        payload: currentCityWeatherDataId
-    };
-};
-
-const cityDataRequested = () => {
-    return {
-        type: 'FETCH_CITY_DATA_REQUEST'
+        type: 'FETCH_CITY_DATA_BY_DAY_SUCCESS',
+        payload: cityDay
     };
 };
 
@@ -38,36 +32,27 @@ const cityDataLoaded = (data) => {
     };
 };
 
-const cityDataError = (error) => {
-    return {
-        type: 'FETCH_CITY_DATA_FAILURE',
-        payload: error
-    };
-};
-
-
 const fetchTiles = (weatherService, dispatch) => () => {
     dispatch(tilesRequested());
     weatherService.getTiles()
         .then((tiles) => {
-            console.log("tiles", tiles);
+            //console.log("tiles", tiles);
             dispatch(tilesLoaded(tiles))
         })
         .catch((err) => dispatch(tilesError(err)));
 }
 
 const fetchCityData = (weatherService, dispatch) => () => {
-    dispatch(cityDataRequested());
+    //dispatch(cityDataRequested());
     weatherService.getCityData()
         .then((data) => {
-            console.log("CityData", data);
+            //console.log("CityData", data);
             dispatch(cityDataLoaded(data))
-        })
-        .catch((err) => dispatch(cityDataError(err)));
+        })       
 }
 
 export {
-    fetchTiles,
-    cityDataLoadedById,
+    fetchTiles,   
+    cityDataLoadedByDay,
     fetchCityData
 };

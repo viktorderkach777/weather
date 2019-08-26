@@ -10,7 +10,7 @@ import Spinner from '../spinner';
 
 class WeatherCity extends Component {
 
-    componentDidMount() { 
+    componentDidMount() {
         //const {weatherService} = this.props;
         // weatherService.fetchData('Rivne')
         // .then((response) => {
@@ -30,62 +30,64 @@ class WeatherCity extends Component {
     }
 
     render() {
-        const {
-            currentCityWeatherDataId,
+       
+        const {            
+            cityDay,
             cityName,
             country,
-            cityData,
-            cityDataLoading,
-            cityDataError
-        } = this.props; 
-        
-        if(cityDataLoading){
+            tiles,
+            tilesLoading,
+            tilesError           
+        } = this.props;
+
+        if (tilesLoading) {
             return <Spinner />
         }
 
-        if (cityDataError) {
+        if (tilesError) {
             return <ErrorIndicator />
-        }        
+        }      
 
-        const data = cityData.find((el) => {
+        const data = tiles.find((el) => {
             return (
-                el.id === currentCityWeatherDataId
+                el.day === cityDay
             )
-        });        
+        });       
 
         const {
-            id,
-            cityDay,
-            cityWeatherDescription,
-            cityWeatherIcon,
-            cityTemp,
-            cityHumidity,
-            cityPressure,
-            cityWind
+            id,           
+            tempMax,
+            tempMin,
+            icon,
+            day,
+            weatherDescription,
+            humidity,
+            pressure,
+            wind
         } = data;
 
         return (
             <>
                 <div>{id}</div>
                 <div><h1>{cityName}, {country}</h1></div>
-                <div><h5>{cityDay}</h5></div>
-                <div><h4>{cityWeatherDescription}</h4></div>
+                <div><h5>{day}</h5></div>
+                <div><h4>{weatherDescription}</h4></div>
                 <Row>
                     <Col>
                         <Row>
-                            <img src={cityWeatherIcon} alt="alt"></img>
-                            <h1>{cityTemp}&deg;C</h1>
+                            <img src={icon} alt="alt"></img>
+                            <h1>{tempMax}&deg;C/{tempMin}&deg;C</h1>
                         </Row>
                     </Col>
                     <Col>
                         <Row>
-                            Humidity: {cityHumidity}%
+                            Humidity: {humidity}%
                                     </Row>
                         <Row>
-                            Pressure: {cityPressure} mm Hg
+                            Pressure: {pressure} mm Hg
                                     </Row>
                         <Row>
-                            Wind: {cityWind} m/s
+                            Wind: {wind} m/s
                                     </Row>
                     </Col>
                 </Row>
@@ -95,20 +97,20 @@ class WeatherCity extends Component {
 }
 
 const mapStateToProps = ({
-    cityData,
-    currentCityWeatherDataId,
+    tiles,   
+    cityDay,
     cityName,
     country,
-    cityDataLoading,
-    cityDataError
+    tilesLoading,
+    tilesError   
 }) => {
     return {
-        cityData,
-        currentCityWeatherDataId,
+        tiles,       
+        cityDay,
         cityName,
         country,
-        cityDataLoading,
-        cityDataError
+        tilesLoading,
+        tilesError       
     };
 }
 

@@ -8,12 +8,10 @@ const initialState = {
     cityName: null,
     country: null,
     currentCityWeatherDataId: null,
-    cityData: []
+    cityDay: null
 };
 
 const reducer = (state = initialState, action) => {
-
-    console.log("action", action);
 
     switch (action.type) {
         case 'FETCH_TILES_REQUEST':
@@ -37,52 +35,29 @@ const reducer = (state = initialState, action) => {
                 tilesLoading: false,
                 tilesError: action.payload
             };
-        case 'FETCH_CITY_DATA_BY_ID_SUCCESS':            
+        case 'FETCH_CITY_DATA_BY_DAY_SUCCESS':
             return {
                 ...state,
-                currentCityWeatherDataId: action.payload
+                cityDay: action.payload
             };
         case 'FETCH_CITY_DATA_SUCCESS':
             const {
                 cityName,
                 country,
-                currentCityWeatherDataId,
-                cityData
+                cityDay,
+                tiles
             } = action.payload;
             return {
                 ...state,
                 cityName,
                 country,
-                currentCityWeatherDataId,
-                cityData,
-                cityDataLoading: false,
-                cityDataError: null
-            };
-        case 'FETCH_CITY_DATA_REQUEST':
-            return {
-                ...state,
-                cityName: null,
-                country: null,
-                currentCityWeatherDataId: null,
-                cityData: [],
-                cityDataLoading: true,
-                cityDataError: null
-            };
-        case 'FETCH_CITY_DATA_FAILURE':
-            return {
-                ...state,
-                cityName: null,
-                country: null,
-                currentCityWeatherDataId: null,
-                cityData: [],
-                cityDataLoading: false,
-                cityDataError: action.payload
+                cityDay,
+                tiles
             };
 
         default:
             return state;
     }
-
 
     //return state;
 };

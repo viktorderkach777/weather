@@ -3,7 +3,7 @@ import WeatherListItem from '../weather-list-item';
 import { connect } from 'react-redux';
 import { compose } from '../../utils';
 import withWeatherService from '../hoc';
-import { fetchTiles, cityDataLoadedById } from '../../actions';
+import { fetchTiles, cityDataLoadedByDay } from '../../actions';
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
 
@@ -37,7 +37,7 @@ const WeatherList = ({ tiles, clickTile }) => {
             {
                 tiles.map((tile) => {
                     return (
-                        <WeatherListItem key={tile.id} tile={tile} onClick={()=>{clickTile(tile.id)}}/>
+                        <WeatherListItem key={tile.day} tile={tile} onClick={()=>{clickTile(tile.day)}}/>
                     )
                 })
             }
@@ -52,7 +52,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         fetchTiles: fetchTiles(weatherService, dispatch),
         clickTile: (id) =>{
-            dispatch(cityDataLoadedById(id))
+            dispatch(cityDataLoadedByDay(id))
             console.log("clickId", id);
         }        
     }
