@@ -1,4 +1,4 @@
-.centerSemen {
+.center {
     position: relative;
     float: left;
     top: 50%;
@@ -12,6 +12,4 @@
 
 a:hover { 
     background-color: silver;
-  }
-
-  
+  } 

@@ -1,23 +1,11 @@
 import React, { Component } from 'react';
 import { Col, Row } from 'reactstrap';
 import { connect } from 'react-redux';
-import ErrorIndicator from '../error-indicator';
-import { compose } from '../../utils';
-import withWeatherService from '../hoc';
-import { fetchTiles } from '../../actions';
-import Spinner from '../spinner';
 import './weather-city.css';
 
+class WeatherCity extends Component {    
 
-class WeatherCity extends Component {
-
-    componentDidMount() {
-
-        this.props.fetchTiles();
-    }
-
-    render() {
-        console.log("cityProps",this.props);
+    render() {       
         const {
             cityDay,
             cityName,
@@ -27,21 +15,15 @@ class WeatherCity extends Component {
             tilesError
         } = this.props;
 
-        if (tilesLoading) {
-            return <Spinner />
-        }
-
-        if (tilesError) {
-            return <ErrorIndicator />
-        }
+        if (tilesLoading || tilesError) {
+            return null;
+        }       
 
         const data = tiles.find((el) => {
             return (
                 el.day === cityDay
             )
-        });
-
-        console.log("data", data);
+        });       
 
         const {
             // id,           
@@ -106,16 +88,4 @@ const mapStateToProps = ({
     };
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-
-    const { weatherService } = ownProps;
-
-    return {
-        fetchTiles: fetchTiles(weatherService, dispatch),
-    }
-};
-
-export default compose(
-    withWeatherService(),
-    connect(mapStateToProps, mapDispatchToProps)
-)(WeatherCity);
+export default connect(mapStateToProps)(WeatherCity);

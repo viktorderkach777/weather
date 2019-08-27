@@ -9,10 +9,8 @@ import ErrorIndicator from '../error-indicator';
 
 class WeatherListContainer extends Component {
 
-    componentDidMount() { 
-
-        this.props.fetchTiles();
-        
+    componentDidMount() {
+        this.props.fetchTiles();        
     }
 
     render() {
@@ -47,14 +45,12 @@ const WeatherList = ({ tiles, clickTile }) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-
     const { weatherService } = ownProps;
 
     return {
         fetchTiles: fetchTiles(weatherService, dispatch),
-        clickTile: (id) =>{
-            dispatch(cityDataLoadedByDay(id))
-            console.log("clickId", id);
+        clickTile: (name) =>{
+            dispatch(cityDataLoadedByDay(name))            
         }        
     }
 };

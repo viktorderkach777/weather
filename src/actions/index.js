@@ -35,25 +35,14 @@ const cityDataLoaded = (data) => {
 const fetchTiles = (weatherService, dispatch) => () => {
     dispatch(tilesRequested());
     weatherService.getTiles()
-        .then((tiles) => {
-            console.log("fetchtiles", tiles);
+        .then((tiles) => {            
             dispatch(tilesLoaded(tiles))
         })
         .catch((err) => dispatch(tilesError(err)));
 }
 
-// const fetchCityData = (weatherService, dispatch) => () => {
-//     //dispatch(cityDataRequested());
-//     weatherService.getCityData()
-//         .then((data) => {
-//             console.log("CityData", data);
-//             dispatch(cityDataLoaded(data))
-//         })       
-// }
-
 export {
     fetchTiles,   
     cityDataLoadedByDay,
-    cityDataLoaded
-    //fetchCityData
+    cityDataLoaded   
 };

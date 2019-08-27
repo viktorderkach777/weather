@@ -2,12 +2,9 @@
 const initialState = {
     tiles: [],
     tilesLoading: true,
-    tilesError: null,
-    cityDataLoading: true,
-    cityDataError: null,
+    tilesError: null,    
     cityName: null,
-    country: null,
-    currentCityWeatherDataId: null,
+    country: null,   
     cityDay: null
 };
 
@@ -22,12 +19,12 @@ const reducer = (state = initialState, action) => {
                 tilesError: null
             };
         case 'FETCH_TILES_SUCCESS':
-                const {
-                    cityName,
-                    country,
-                    cityDay,
-                    tiles
-                } = action.payload;
+            const {
+                cityName,
+                country,
+                cityDay,
+                tiles
+            } = action.payload;
             return {
                 ...state,
                 cityName,
@@ -49,26 +46,9 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 cityDay: action.payload
             };
-        case 'FETCH_CITY_DATA_SUCCESS':
-            // const {
-            //     cityName,
-            //     country,
-            //     cityDay,
-            //     tiles
-            // } = action.payload;
-            return {
-                ...state,
-                cityName: action.payload.cityName,
-                country: action.payload.country,
-                cityDay: action.payload.cityDay,
-                tiles: action.payload.tiles
-            };
-
         default:
             return state;
-    }
-
-    //return state;
+    }   
 };
 
 export default reducer;

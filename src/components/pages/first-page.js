@@ -6,17 +6,13 @@ import {
     Row,
     Col,
     Card,
-    CardTitle,
-    //CardImg,
-    CardBody,
-    //CardText,
-    //Button
+    CardTitle,    
+    CardBody    
 } from 'reactstrap';
 
 const FirstPage = () => {
 
     return (
-
         <Container>
             <Row>
                 <Col sm="12" md={{ size: 10, offset: 1 }}>
