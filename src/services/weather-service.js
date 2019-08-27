@@ -2,33 +2,33 @@ import { APP_ID } from '../actions/constants';
 import axios from "axios";
 
 export default class WeatherService {
-    tiles = [
-        {
-            tempMax: 30,
-            tempMin: 20,
-            icon: 'https:openweathermap.org/img/w/01d.png',
-            day: 'monday',
-            weatherDescription: 'sun',
-            humidity: 60,
-            pressure: 760,
-            wind: 4
-        },
-        {
-            tempMax: 29,
-            tempMin: 28,
-            icon: 'https:openweathermap.org/img/w/10d.png',
-            day: 'friday',
-            weatherDescription: 'sun',
-            humidity: 70,
-            pressure: 770,
-            wind: 5
-        }
+    //tiles = [];
+    //     {
+    //         tempMax: 30,
+    //         tempMin: 20,
+    //         icon: 'https:openweathermap.org/img/w/01d.png',
+    //         day: 'monday',
+    //         weatherDescription: 'sun',
+    //         humidity: 60,
+    //         pressure: 760,
+    //         wind: 4
+    //     },
+    //     {
+    //         tempMax: 29,
+    //         tempMin: 28,
+    //         icon: 'https:openweathermap.org/img/w/10d.png',
+    //         day: 'friday',
+    //         weatherDescription: 'sun',
+    //         humidity: 70,
+    //         pressure: 770,
+    //         wind: 5
+    //     }
 
-    ];
+    // ];
 
-    cityName = 'Kyiv';
-    country = 'UA';
-    cityDay = 'monday';
+    // cityName = 'Kyiv';
+    // country = 'UA';
+    // cityDay = 'monday';
 
 
     _apiBase = 'https://api.openweathermap.org/data/2.5/forecast';
@@ -167,7 +167,7 @@ export default class WeatherService {
     getTiles = async () => {
         const weather = await this._getResources();
         //console.log("weather.tiles", weather.tiles);
-        return weather.tiles;
+        return weather;//.tiles;
     }
 
 

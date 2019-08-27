@@ -42,17 +42,18 @@ const fetchTiles = (weatherService, dispatch) => () => {
         .catch((err) => dispatch(tilesError(err)));
 }
 
-const fetchCityData = (weatherService, dispatch) => () => {
-    //dispatch(cityDataRequested());
-    weatherService.getCityData()
-        .then((data) => {
-            console.log("CityData", data);
-            dispatch(cityDataLoaded(data))
-        })       
-}
+// const fetchCityData = (weatherService, dispatch) => () => {
+//     //dispatch(cityDataRequested());
+//     weatherService.getCityData()
+//         .then((data) => {
+//             console.log("CityData", data);
+//             dispatch(cityDataLoaded(data))
+//         })       
+// }
 
 export {
     fetchTiles,   
     cityDataLoadedByDay,
-    fetchCityData
+    cityDataLoaded
+    //fetchCityData
 };

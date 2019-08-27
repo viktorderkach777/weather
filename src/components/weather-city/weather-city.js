@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ErrorIndicator from '../error-indicator';
 import { compose } from '../../utils';
 import withWeatherService from '../hoc';
-import { fetchCityData } from '../../actions';
+import { fetchTiles } from '../../actions';
 import Spinner from '../spinner';
 import './weather-city.css';
 
@@ -12,22 +12,8 @@ import './weather-city.css';
 class WeatherCity extends Component {
 
     componentDidMount() {
-        //const {weatherService} = this.props;
-        // weatherService.fetchData('Rivne')
-        // .then((response) => {
-        //     console.log('FETCH_DATA_FULFILLED', response.data);
-        //   //dispatch({type: FETCH_DATA_FULFILLED, payload: response.data});
-        // })
-        // .catch((err) => {
-        //     console.log('FETCH_DATA_REJECTED', err);
-        //   //dispatch({type: FETCH_DATA_REJECTED, payload: err}); // Error handling
-        // });    
-        // weatherService.getResources()
-        // .then((body)=>{
-        //     console.log("body", body);
-        // })
-        // .catch((err)=>console.error(err));   
-        this.props.fetchCityData();
+
+        this.props.fetchTiles();
     }
 
     render() {
@@ -69,8 +55,7 @@ class WeatherCity extends Component {
             wind,
             calendDay,
             calendMonth
-        } = data;
-        //const tempMax =  data.tempMax|| null;
+        } = data;       
 
         return (
             <>
@@ -126,7 +111,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     const { weatherService } = ownProps;
 
     return {
-        fetchCityData: fetchCityData(weatherService, dispatch),
+        fetchTiles: fetchTiles(weatherService, dispatch),
     }
 };
 

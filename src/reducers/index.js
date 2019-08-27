@@ -22,9 +22,18 @@ const reducer = (state = initialState, action) => {
                 tilesError: null
             };
         case 'FETCH_TILES_SUCCESS':
+                const {
+                    cityName,
+                    country,
+                    cityDay,
+                    tiles
+                } = action.payload;
             return {
                 ...state,
-                tiles: action.payload,
+                cityName,
+                country,
+                cityDay,
+                tiles,
                 tilesLoading: false,
                 tilesError: null
             };
@@ -41,18 +50,18 @@ const reducer = (state = initialState, action) => {
                 cityDay: action.payload
             };
         case 'FETCH_CITY_DATA_SUCCESS':
-            const {
-                cityName,
-                country,
-                cityDay,
-                tiles
-            } = action.payload;
+            // const {
+            //     cityName,
+            //     country,
+            //     cityDay,
+            //     tiles
+            // } = action.payload;
             return {
                 ...state,
-                cityName,
-                country,
-                cityDay,
-                tiles
+                cityName: action.payload.cityName,
+                country: action.payload.country,
+                cityDay: action.payload.cityDay,
+                tiles: action.payload.tiles
             };
 
         default:
