@@ -6,6 +6,7 @@ import { compose } from '../../utils';
 import withWeatherService from '../hoc';
 import { fetchCityData } from '../../actions';
 import Spinner from '../spinner';
+import './weather-city.css';
 
 
 class WeatherCity extends Component {
@@ -30,14 +31,14 @@ class WeatherCity extends Component {
     }
 
     render() {
-       
-        const {            
+        console.log("cityProps",this.props);
+        const {
             cityDay,
             cityName,
             country,
             tiles,
             tilesLoading,
-            tilesError           
+            tilesError
         } = this.props;
 
         if (tilesLoading) {
@@ -46,15 +47,15 @@ class WeatherCity extends Component {
 
         if (tilesError) {
             return <ErrorIndicator />
-        }      
+        }
 
         const data = tiles.find((el) => {
             return (
                 el.day === cityDay
             )
-        });    
-        
-        //console.log("data" , data);
+        });
+
+        console.log("data", data);
 
         const {
             // id,           
@@ -65,32 +66,36 @@ class WeatherCity extends Component {
             weatherDescription,
             humidity,
             pressure,
-            wind
+            wind,
+            calendDay,
+            calendMonth
         } = data;
+        //const tempMax =  data.tempMax|| null;
 
         return (
             <>
-                {/* <div>{id}</div> */}
-                <div><h1>{cityName}, {country}</h1></div>
-                <div><h5>{day}</h5></div>
-                <div><h4>{weatherDescription}</h4></div>
                 <Row>
                     <Col>
                         <Row>
-                            <img src={icon} alt="alt"></img>
-                            <h1>{tempMax}&deg;C/{tempMin}&deg;C</h1>
+                            <div className="city">
+                                <h1 >{cityName}, {country}</h1>
+                                <h5 >{day}</h5>
+                                <h4 >{weatherDescription}</h4>
+                                <img src={icon} alt="alt" className="city"></img>
+                                <h3 ><strong>{tempMax}&deg;</strong>/{tempMin}&deg;</h3>
+                            </div>
                         </Row>
                     </Col>
+
                     <Col>
                         <Row>
-                            Humidity: {humidity}%
-                                    </Row>
-                        <Row>
-                            Pressure: {pressure} mm Hg
-                                    </Row>
-                        <Row>
-                            Wind: {wind} m/s
-                                    </Row>
+                            <div className="city">
+                                <h3 style={{ marginBottom: "30px" }}>{calendMonth}, {calendDay}</h3>
+                                <h5 > Humidity: {humidity}%</h5>
+                                <h5 > Pressure: {pressure} mm Hg</h5>
+                                <h5 >Wind: {wind} m/s</h5>
+                            </div>
+                        </Row>
                     </Col>
                 </Row>
             </>
@@ -99,20 +104,20 @@ class WeatherCity extends Component {
 }
 
 const mapStateToProps = ({
-    tiles,   
+    tiles,
     cityDay,
     cityName,
     country,
     tilesLoading,
-    tilesError   
+    tilesError
 }) => {
     return {
-        tiles,       
+        tiles,
         cityDay,
         cityName,
         country,
         tilesLoading,
-        tilesError       
+        tilesError
     };
 }
 

@@ -36,7 +36,7 @@ const fetchTiles = (weatherService, dispatch) => () => {
     dispatch(tilesRequested());
     weatherService.getTiles()
         .then((tiles) => {
-            console.log("tiles", tiles);
+            console.log("fetchtiles", tiles);
             dispatch(tilesLoaded(tiles))
         })
         .catch((err) => dispatch(tilesError(err)));
@@ -46,7 +46,7 @@ const fetchCityData = (weatherService, dispatch) => () => {
     //dispatch(cityDataRequested());
     weatherService.getCityData()
         .then((data) => {
-            //console.log("CityData", data);
+            console.log("CityData", data);
             dispatch(cityDataLoaded(data))
         })       
 }

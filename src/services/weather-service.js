@@ -32,7 +32,7 @@ export default class WeatherService {
 
 
     _apiBase = 'https://api.openweathermap.org/data/2.5/forecast';
-    
+
     _fetchData = async (region = 'Rivne') => {
         const { latitude, longitude } = region || {};
 
@@ -42,7 +42,7 @@ export default class WeatherService {
         let location = typeof (region) === "object" ? getDataByCoords : getDataByCity;
 
         return await axios.get(location)
-       
+
     };
 
     _avgArr = (arr) => {
@@ -59,6 +59,8 @@ export default class WeatherService {
 
             dataTime.push({
                 hour: this._getHour(item.dt * 1000),
+                calendDay: this._getDate(item.dt * 1000),
+                calendMonth: this._getMonth(item.dt * 1000),
                 icon: item.weather[0].icon,
                 description: item.weather[0].description
             });
@@ -85,6 +87,8 @@ export default class WeatherService {
                 day: this._getDayInfo(data),
                 weatherDescription: weatherData.description,
                 hour: weatherData.hour,
+                calendDay: weatherData.calendDay,
+                calendMonth: this._getMonthInfo(weatherData.calendMonth),
                 icon: `https://openweathermap.org/img/w/${weatherData.icon}.png`
             }
         );
@@ -106,8 +110,14 @@ export default class WeatherService {
 
     // Returns week of the day
     _getDayInfo = data => {
-        const daysOfWeek = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+        const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         return daysOfWeek[new Date(data[0].dt * 1000).getDay()];
+    };
+
+    _getMonthInfo = data => {
+        const monthsOfYear = ["January", "February", "March", "April", "May", "June", "July",
+            "August", "September", "October", "November", "December"];
+        return monthsOfYear[data];
     };
 
     _getIcon = data => `https://openweathermap.org/img/w/${data[0].weather[0].icon}.png`;
@@ -116,18 +126,20 @@ export default class WeatherService {
 
     _getDate = date => date ? new Date(date).getDate() : new Date().getDate();
 
+    _getMonth = date => date ? new Date(date).getMonth() : new Date().getMonth();
+
     _getResources = async () => {
         const weather = await this._fetchData()
             .then((body) => {
                 // console.log("res", body);
                 // console.log("body.data", body.data);
-                // console.log("body.data.list", body.data.list);
+                //console.log("body.data.list", body.data.list);
                 if (body.ok) {
                     throw new Error(`Could not fetch, received ${body.status}`);
                 }
 
                 const tilesValues = Object.values(this._groupByDays(body.data.list));
-                // console.log("tiles", tiles);
+                console.log("tilesValues", tilesValues);
                 const forecastTiles = tilesValues.length > 5 ? tilesValues.slice(0, 5) : tilesValues;
                 // console.log("forecastTiles", forecastTiles);
                 //let list=[];
@@ -145,7 +157,7 @@ export default class WeatherService {
                     cityDay: tiles[0].day,
                     tiles: tiles
                 }
-
+                console.log("weather", weather);
                 return weather;
             });
 
@@ -155,15 +167,15 @@ export default class WeatherService {
     getTiles = async () => {
         const weather = await this._getResources();
         //console.log("weather.tiles", weather.tiles);
-        return weather.tiles;       
-    }    
+        return weather.tiles;
+    }
 
 
-    getCityData = async () => {       
+    getCityData = async () => {
         const weather = await this._getResources();
         //console.log("weather", weather);
         return weather;
-    }    
+    }
 }
 
 

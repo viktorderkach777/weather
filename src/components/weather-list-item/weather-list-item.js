@@ -4,33 +4,36 @@ import {
     Row,
     Col,
     Card,
-    CardTitle,
+    // CardTitle,
     //CardImg,
     CardBody,
     //CardText,
     //Button
 } from 'reactstrap';
-import './mycenter.css';
+import './weather-list-item.css';
 
 const WeatherListItem = ({ tile, onClick }) => {
-    const { tempMax, tempMin, icon, day } = tile;
+    // console.log("-----tile------", tile)
+    const { tempMax, tempMin, icon, day, calendDay, calendMonth } = tile;
     return (
-        // <>
-        //     <span>{day}</span>
-        //     <span>{icon}</span>
-        //     <span>{tempMax}</span>
-        //     <span>{tempMin}</span>
-        // </>
-
-        <Col>
-            {/* <a  style={{ cursor: "pointer" }} onClick={onClick}> */}
+        <Col>           
             <Card tag="a" style={{ cursor: "pointer", margin: "auto", textAlign: "center" }} onClick={onClick} body outline color="primary" className="text-center">
                 <CardBody >
                     <Row>
-                        <div className="centerSemen">
+                        <div className="centerSemen ">
                             {day}
                         </div>
                     </Row>
+                    <Row>
+                        <div className="centerSemen ">
+                            <strong>{calendDay}</strong>
+                        </div>
+                    </Row>
+                     <Row>
+                        <div className="centerSemen month">
+                            {calendMonth}
+                        </div>
+                    </Row> 
                     <Row>
                         <div className="centerSemen">
                             <img src={icon} alt="alt"></img>
@@ -42,8 +45,7 @@ const WeatherListItem = ({ tile, onClick }) => {
                         </div>
                     </Row>
                 </CardBody>
-            </Card>
-            {/* </a> */}
+            </Card>           
         </Col >
 
     );
