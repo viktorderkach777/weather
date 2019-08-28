@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import ErrorIndicator from '../error-indicator';
+//import ErrorIndicator from '../error-indicator';
+
+const ErrorIndicator = React.lazy(() => import('../error-indicator'));
+
 
 class ErrorBoundry extends Component {
     state = {
